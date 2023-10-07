@@ -377,8 +377,7 @@ addID_reply () {
     }
 }
 ssh_reply() 
-    bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
-    bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
+
     local bot_retorno="$LINE\n"
     local mensaje="$1"
     ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
@@ -392,6 +391,8 @@ ssh_reply()
         
         # Se instala script en la VPS
         bot_retorno+="✅ INSTALADO SCRIPT 8.5 ✅\n"
+	bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
+   	bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
         sshpass -p "$pass" ssh $user@$ip << EOF
         wget https://raw.githubusercontent.com/VPSCAT/VPSMX/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
         rm -rf Install-Sin-Key.sh
