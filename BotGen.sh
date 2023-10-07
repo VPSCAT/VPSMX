@@ -388,11 +388,11 @@ ssh_reply() {
 	curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
         
         # Se instala script en la VPS
-	
+	curl -s -X POST $URL -d chat_id=$ID -d text="⏱️ COMENZANDO A INSTALAR SCRIPT..." &>/dev/null
         sshpass -p "$pass" ssh $user@$ip << EOF
         wget https://raw.githubusercontent.com/VPSCAT/VPSMX/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
         rm -rf Install-Sin-Key.sh
-	curl -s -X POST $URL -d chat_id=$ID -d text="✅ INSTALADO SCRIPT 8.5 ✅" &>/dev/null
+	curl -s -X POST $URL -d chat_id=$ID -d text="✅ INSTALACION COMPLETADA SCRIPT 8.5 ✅" &>/dev/null
 EOF
     else
     	curl -s -X POST $URL -d chat_id=$ID -d text="No se pudo conectar a la VPS mediante SSH. ❌" &>/dev/null
