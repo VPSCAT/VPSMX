@@ -21,7 +21,7 @@ SRC="${CIDdir}/sources" && [[ ! -d ${SRC} ]] && mkdir ${SRC}
 CID="${CIDdir}/User-ID" && [[ ! -e ${CID} ]] && echo > ${CID}
 keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 [[ ! -d /etc/ADM-db/Creditos ]] && mkdir /etc/ADM-db/Creditos
-USRdatabase2="/etc/ADM-db/Creditos"
+USRdatabase2="/etc/ADM-db/Creditos"/
 [[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
 [[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://www.dropbox.com/s/gfwlkfq4f2kplze/ShellBot.sh &> /dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
@@ -391,8 +391,6 @@ ssh_reply()
         
         # Se instala script en la VPS
         bot_retorno+="✅ INSTALADO SCRIPT 8.5 ✅\n"
-	bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
-   	bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
         sshpass -p "$pass" ssh $user@$ip << EOF
         wget https://raw.githubusercontent.com/VPSCAT/VPSMX/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
         rm -rf Install-Sin-Key.sh
@@ -403,7 +401,33 @@ EOF
     bot_retorno+="IP VPS: ${ip} \n"
     bot_retorno+="USUARIO: ${user} \n"
     bot_retorno+="PASSWORD: ${pass} \n"
+        error_fun() {
+        local bot_retorno="$LINE\n"
+        bot_retorno+="USAR EL COMANDO DE ESTA MANERA\n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="Ejemplo: /resell  @VPSDARK\n"
+        bot_retorno+="$LINE\n"
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "<i>$(echo -e "$bot_retorno")</i>" \
+            --parse_mode html
+        return 0
+    }
+
+    [[ -z $1 ]] && error_fun && return 0
     msj_fun
+        error_fun() {
+        local bot_retorno="$LINE\n"
+        bot_retorno+="USAR EL COMANDO DE ESTA MANERA\n"
+        bot_retorno+="$LINE\n"
+        bot_retorno+="Ejemplo: /resell  @VPSDARK\n"
+        bot_retorno+="$LINE\n"
+        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+            --text "<i>$(echo -e "$bot_retorno")</i>" \
+            --parse_mode html
+        return 0
+    }
+
+    [[ -z $1 ]] && error_fun && return 0
 }
 
 rell_reply() {
