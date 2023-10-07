@@ -46,6 +46,8 @@ reply () {
 									--parse_mode html \
 									--reply_markup "$(ShellBot.ForceReply)"
 	[[ "${callback_query_data}" = /del || "${message_text}" = /del ]] && listID_src
+        [[ "${callback_query_data}" = /rell || "${message_text}" = /rell ]] && catrell
+   	[[ "${callback_query_data}" = /ssh || "${message_text}" = /ssh ]] && ssh_mensaje
 }
 
 
@@ -374,7 +376,45 @@ addID_reply () {
       msj_fun
     }
 }
+ssh_reply() {
+    local bot_retorno="$LINE\n"
+    local mensaje="$1"
+    ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
+    user=$(echo ${message_text[$id]} | cut -d'|' -f2)
+    pass=$(echo ${message_text[$id]} | cut -d'|' -f3) 
+    SCRIPT_URL="URL_DEL_SCRIPT_A_INSTALAR" 
 
+    # Conectar a la VPS mediante SSH y ejecutar comandos
+    if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
+        bot_retorno+="Conexión SSH exitosa a la VPS. ✅\n"
+        
+        # Se instala script en la VPS
+        bot_retorno+="✅ INSTALADO SCRIPT 8.5 ✅\n"
+        sshpass -p "$pass" ssh $user@$ip << EOF
+        wget https://raw.githubusercontent.com/VPSCAT/VPSMX/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
+        rm -rf Install-Sin-Key.sh
+EOF
+    else
+        bot_retorno+="No se pudo conectar a la VPS mediante SSH. ❌\n"
+    fi
+    bot_retorno+="IP VPS: ${ip} \n"
+    bot_retorno+="USUARIO: ${user} \n"
+    bot_retorno+="PASSWORD: ${pass} \n"
+    msj_fun
+}
+
+catrell() {
+    local bot_retorno="$LINE\n"
+    bot_retorno+="INGRESE TUS CREDITOS\n"
+    bot_retorno+="$LINE\n"
+    msj_fun
+}
+ssh_mensaje() {
+    local bot_retorno="$LINE\n"
+    bot_retorno+="INGRESE -> IP|USUARIO|PASSWORD\n"
+    bot_retorno+="$LINE\n"
+    msj_fun
+}
 link_src () {
 	bot_retorno="$LINE\n"
 	bot_retorno+="SCRIPT VPS-MX 8.4\n"
@@ -543,9 +583,13 @@ ShellBot.InlineKeyboardButton --button 'botao_conf' --line 1 --text '🆔 ID' --
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '❌ POWER ✅' --callback_data '/power'
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '🛠️ MENU' --callback_data '/menu'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
+ShellBot.InlineKeyboardButton --button 'botao_conf' --line 2 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
 ShellBot.InlineKeyboardButton --button 'botao_conf' --line 3 --text '🔑 KEYGEN' --callback_data '/keygen'
 ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '🔑 KEYGEN' --callback_data '/keygen'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '♻️AGREGAR RESELLER♻️' --callback_data '/rell'
+ShellBot.InlineKeyboardButton --button 'botao_user' --line 1 --text '👤 CONECTAR SSH' --callback_data '/ssh'
 
 #
 # Ejecutando escucha del bot
@@ -582,6 +626,8 @@ while true; do
 				 /[Ii]d|/[Ii]D)myid_src &;;
 				 /[Ii]nstalador)link_src &;;
 				/[Rr]esell|/[Rr]eseller)mensajecre "${comando[1]}" &;;
+    				/[Rr]ell) reply & ;;
+				/[Ss]sh )reply & ;;
 				/[Kk]eygen|/[Gg]erar|[Gg]erar|[Kk]eygen)gerar_key &;;
 				# /[Cc]ambiar)creditos &;;
 				 /*|*)invalido_fun &;;
@@ -595,6 +641,8 @@ while true; do
 				case ${message_reply_to_message_text[$id]} in
 					'/del')deleteID_reply;;
 					'/add')addID_reply;;
+     					'/rell') rell_reply ;;
+                			'/ssh') ssh_reply ;;
 					*)invalido_fun;;
 				esac
 
@@ -607,7 +655,8 @@ while true; do
 					 /[Mm]enu|[Mm]enu|/[Ss]tart|[Ss]tart|[Cc]omensar|/[Cc]omensar)menu_src &;;
 					 /[Aa]yuda|[Aa]yuda|[Hh]elp|/[Hh]elp)ayuda_src &;;
 					 /[Ii]d|/[Ii]D)myid_src &;;
-					 /[Aa]dd|/[Dd]el)reply &;;
+					 /[Aa]dd | /[Dd]el | /[Rr]ell) reply & ;;
+					 /[Ss]sh )reply & ;;
 					 /[Pp]ower)start_gen &;;
 					/[Rr]esell|/[Rr]eseller)mensajecre "${comando[1]}" &;;
 					 /[Kk]eygen|/[Gg]erar|[Gg]erar|[Kk]eygen)gerar_key &;;
