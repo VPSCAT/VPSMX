@@ -147,6 +147,8 @@ echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Update"
 apt-get update &>/dev/null & spiner
 echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Upgrade"
 apt-get upgrade -y &>/dev/null & spiner
+echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Ssh"
+apt-get install sshpass -y &>/dev/null & spiner
 echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Unzip"
 apt-get install unzip -y &>/dev/null & spiner
 echo -e "\033[31m[\033[32m~\033[31m]\033[37m$instalando Zip"
