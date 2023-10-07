@@ -405,9 +405,9 @@ EOF
 ssh_reply() {
     local bot_retorno="$LINE\n"
     local mensaje="$1"
-    ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
-    user=$(echo ${message_text[$id]} | cut -d'|' -f2)
-    pass=$(echo ${message_text[$id]} | cut -d'|' -f3) 
+    ip=$(echo "${message_text[$id]}" | cut -d'|' -f1)
+    user=$(echo "${message_text[$id]}" | cut -d'|' -f2)
+    pass=$(echo "${message_text[$id]}" | cut -d'|' -f3) 
     SCRIPT_URL="URL_DEL_SCRIPT_A_INSTALAR" 
 
     # Conectar a la VPS mediante SSH y ejecutar comandos
