@@ -415,41 +415,6 @@ EOF
 
     [[ -z $1 ]] && error_fun && return 0
     msj_fun
-        error_fun() {
-        local bot_retorno="$LINE\n"
-        bot_retorno+="USAR EL COMANDO DE ESTA MANERA\n"
-        bot_retorno+="$LINE\n"
-        bot_retorno+="Ejemplo: /resell  @VPSDARK\n"
-        bot_retorno+="$LINE\n"
-        ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
-            --text "<i>$(echo -e "$bot_retorno")</i>" \
-            --parse_mode html
-        return 0
-    }
-
-    [[ -z $1 ]] && error_fun && return 0
-}
-
-rell_reply() {
-    [[ $(cat ${USRdatabase2} | grep "${message_text[$id]}") = "" ]] && {
-        echo "${message_text[$id]}" >${USRdatabase2}/Mensaje_$chatuser.txt
-        bot_retorno="$LINE\n"
-        bot_retorno+="✅Creditos Cambiado ✅\n"
-        bot_retorno+="$LINE\n"
-        bot_retorno+="Nuevo Reseller: ${message_text[$id]}\nPARA REGRESAR /menu\n"
-        bot_retorno+="$LINE"
-
-        [[ ! -z ${callback_query_message_chat_id[$id]} ]] && var=${callback_query_message_chat_id[$id]} || var=${message_chat_id[$id]}
-        ShellBot.sendMessage --chat_id $var \
-            --text "<i>$(echo -e "$bot_retorno")</i>" \
-            --parse_mode html
-
-        return 0
-
-    } || {
-        bot_retorno="====ERROR====\n"
-        bot_retorno+="$LINE\n"
-        msj_fun
     }
 }
 
