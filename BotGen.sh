@@ -1,7 +1,8 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
 TOKEN="6235275717:AAGmFqMBVtwP_Vavqm2xBSD_BupVzanjnuQ"
-CHAT_ID="1099960616"
+ID="1099960616"
+URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 meu_ip_fun () {
 MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MIP2=$(wget -qO- ipv4.icanhazip.com)
