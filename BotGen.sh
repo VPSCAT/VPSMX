@@ -376,8 +376,19 @@ addID_reply () {
       msj_fun
     }
 }
-ssh_reply() 
-
+ssh_reply() {
+  error_fun () {
+local bot_retorno="$LINE\n"
+		  bot_retorno+="USAR EL COMANDO DE ESTA MANERA\n"
+		  bot_retorno+="$LINE\n"
+          bot_retorno+="Ejemplo: /resell VPSNIXON\n"
+          bot_retorno+="$LINE\n"
+	      ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+							--text "<i>$(echo -e "$bot_retorno")</i>" \
+							--parse_mode html
+return 0
+}
+[[ -z $1 ]] && error_fun && return 0
     local bot_retorno="$LINE\n"
     local mensaje="$1"
     ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
@@ -402,7 +413,6 @@ EOF
     bot_retorno+="USUARIO: ${user} \n"
     bot_retorno+="PASSWORD: ${pass} \n"
     msj_fun
-    }
 }
 
 catrell() {
