@@ -376,33 +376,27 @@ addID_reply () {
       msj_fun
     }
 }
+
 ssh_reply() {
-	local bot_retorno="$LINE\n"
- 	bot_retorno+="✅ INSTALADO SCRIPT 8.5 ✅\n"
-    local bot_retorno="$LINE\n"
-    local mensaje="$1"
+TOKEN="${bot_token}"
+CHAT_ID="${chatuser}"
     ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
     user=$(echo ${message_text[$id]} | cut -d'|' -f2)
     pass=$(echo ${message_text[$id]} | cut -d'|' -f3) 
-    SCRIPT_URL="URL_DEL_SCRIPT_A_INSTALAR" 
-
-    # Conectar a la VPS mediante SSH y ejecutar comandos
-    if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
-        bot_retorno+="Conexión SSH exitosa a la VPS. ✅\n"
+       if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
+	curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
         
         # Se instala script en la VPS
-        bot_retorno+="✅ INSTALADO SCRIPT 8.5 ✅\n"
+	
         sshpass -p "$pass" ssh $user@$ip << EOF
         wget https://raw.githubusercontent.com/VPSCAT/VPSMX/master/Install-Sin-Key.sh; chmod 777 Install-Sin-Key.sh; ./Install-Sin-Key.sh
         rm -rf Install-Sin-Key.sh
+	curl -s -X POST $URL -d chat_id=$ID -d text="✅ INSTALADO SCRIPT 8.5 ✅" &>/dev/null
 EOF
     else
-        bot_retorno+="No se pudo conectar a la VPS mediante SSH. ❌\n"
+    	curl -s -X POST $URL -d chat_id=$ID -d text="No se pudo conectar a la VPS mediante SSH. ❌" &>/dev/null
     fi
-    bot_retorno+="IP VPS: ${ip} \n"
-    bot_retorno+="USUARIO: ${user} \n"
-    bot_retorno+="PASSWORD: ${pass} \n"
-    msj_fun
+
 }
 
 rell_reply() {
