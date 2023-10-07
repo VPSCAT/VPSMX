@@ -1,8 +1,5 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-TOKEN="6235275717:AAGmFqMBVtwP_Vavqm2xBSD_BupVzanjnuQ"
-ID="1099960616"
-URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 meu_ip_fun () {
 MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MIP2=$(wget -qO- ipv4.icanhazip.com)
@@ -383,6 +380,9 @@ ssh_reply() {
     ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
     user=$(echo ${message_text[$id]} | cut -d'|' -f2)
     pass=$(echo ${message_text[$id]} | cut -d'|' -f3) 
+    TOKEN="${bot_token}"
+    ID="${chatuser}"
+    URL="https://api.telegram.org/bot$TOKEN/sendMessage"
        if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
 	curl -s -X POST $URL -d chat_id=$ID -d text="Conexión SSH exitosa a la VPS. ✅" &>/dev/null
         
