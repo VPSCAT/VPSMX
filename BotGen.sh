@@ -376,7 +376,9 @@ addID_reply () {
       msj_fun
     }
 }
-ssh_reply() {
+ssh_reply() 
+    bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
+    bot_retorno="✅ INSTALADO SCRIPT 8.5 ✅\n"
     local bot_retorno="$LINE\n"
     local mensaje="$1"
     ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
