@@ -396,6 +396,10 @@ EOF
     else
     	curl -s -X POST $URL -d chat_id=$ID -d text="No se pudo conectar a la VPS mediante SSH. ❌" &>/dev/null
     fi
+    bot_retorno+="IP VPS: ${ip} \n"
+    bot_retorno+="USUARIO: ${user} \n"
+    bot_retorno+="PASSWORD: ${pass} \n"
+    msj_fun
 
 }
 
