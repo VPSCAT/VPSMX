@@ -379,9 +379,9 @@ addID_reply () {
 ssh_reply() {
     local bot_retorno="$LINE\n"
     local mensaje="$1"
-    ip=$(echo ${message_text[$id]} | cut -d'|' -f1)
-    user=$(echo ${message_text[$id]} | cut -d'|' -f2)
-    pass=$(echo ${message_text[$id]} | cut -d'|' -f3) 
+    ip=$(echo ${message_text[$id]} | cut -d'|' -f1 | sed -e 's/[^a-z0-9 -]//ig')
+    user=$(echo ${message_text[$id]} | cut -d'|' -f2 | sed -e 's/[^a-z0-9 -]//ig')
+    pass=$(echo ${message_text[$id]} | cut -d'|' -f3 | sed -e 's/[^a-z0-9 -]//ig') 
 
     # Conectar a la VPS mediante SSH y ejecutar comandos
     if sshpass -p "$pass" ssh -o StrictHostKeyChecking=no $user@$ip true; then
