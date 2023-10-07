@@ -392,9 +392,9 @@ clear
 sleep 1
 echo -e " ACTUALIZANDO BOT KEYGEN"
 sleep 1
-wget -O /etc/ADM-db/BotGen.sh https://www.dropbox.com/s/b5smvgxkymx8e76/BotGen.sh &>/dev/null
+wget -O /etc/ADM-db/BotGen.sh https://raw.githubusercontent.com/VPSCAT/VPSMX/master/BotGen.sh &>/dev/null
 chmod +x ${CIDdir}/BotGen.sh
-wget -O /bin/vpsbot https://www.dropbox.com/s/yudunav0n6obduo/BOT.sh &>/dev/null && chmod +x /bin/vpsbot
+wget -O /bin/vpsbot https://raw.githubusercontent.com/VPSCAT/VPSMX/master/BOT.sh &>/dev/null && chmod +x /bin/vpsbot
 sleep 2
 echo -e " BOT ACTUALIZADA CON ÉXITO"
 sleep 1
